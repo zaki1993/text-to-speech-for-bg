@@ -1,33 +1,48 @@
 package com.zaki.text.to.speach.bg.parser;
 
-import com.zaki.text.to.speach.bg.exception.InvalidInputException;
-import com.zaki.text.to.speach.bg.utils.Utils;
+import com.zaki.text.to.speach.bg.exception.GeneralException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Token {
 
     private static Map<String, Token> tokens = new HashMap<>();
 
     static {
-        // TODO load tokens
-        tokens.put("a", new Token("a", ""));
-        tokens.put("b", new Token("b", ""));
-        tokens.put("c", new Token("c", ""));
-        tokens.put("d", new Token("d", ""));
-        tokens.put("e", new Token("e", ""));
-        tokens.put("f", new Token("f", ""));
+        try (Scanner sc = new Scanner(Token.class.getClassLoader().getResourceAsStream("sounds"))) {
+            if (sc != null) {
+                while (sc.hasNextLine()) {
+                    String line = sc.nextLine();
+                    System.out.println("Load: " + line);
+                    String[] parts = line.split("=");
+                    String symbol = parts[0];
+                    String sound = parts[1];
+                    tokens.put(symbol, new Token(symbol, sound));
+                }
+            } else {
+                throw new GeneralException("Could not find sounds mapping file..!");
+            }
+        }
+        if (tokens.isEmpty()) {
+            throw new GeneralException("Could not find sounds mapping file..!");
+        }
     }
 
     private final String symbols;
 
-    private final String audio;
+    private final String audioUrl;
 
-    private Token(String symbols, String audio) {
+    private Token(String symbols, String audioUrl) {
         this.symbols = symbols;
-        this.audio = audio;
+        this.audioUrl = audioUrl;
     }
+
+    public String getAudioUrl() {
+        return audioUrl;
+    }
+
     public static Token get(String c) {
         Token result = null;
         if (tokens.containsKey(c)) {
