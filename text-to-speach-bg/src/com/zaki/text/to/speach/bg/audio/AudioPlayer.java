@@ -1,5 +1,6 @@
 package com.zaki.text.to.speach.bg.audio;
 
+import audio.AudioResourceLoader;
 import com.zaki.text.to.speach.bg.exception.InvalidAudioException;
 import com.zaki.text.to.speach.bg.parser.Token;
 
@@ -13,13 +14,13 @@ import java.util.concurrent.CountDownLatch;
 
 public class AudioPlayer {
     public void play(Token t) {
-        CountDownLatch syncLatch = new CountDownLatch(1);
+        CountDownLatch syncLatch = new CountDownLatch(0);
 
         // For now load the audio every time and just play it
         // TODO: load the audio in the memory and play it, it would be faster
         try {
             System.out.println("Playing: " + t.getAudioUrl());
-            InputStream i = getClass().getResourceAsStream(t.getAudioUrl());
+            InputStream i = AudioResourceLoader.class.getResourceAsStream(t.getAudioUrl());
             AudioInputStream in = AudioSystem.getAudioInputStream(i);
             Clip clip = AudioSystem.getClip();
             // Listener which allow method return once sound is completed
@@ -32,6 +33,7 @@ public class AudioPlayer {
             clip.start();
 
             syncLatch.await();
+            Thread.sleep(350);
         } catch (Exception e) {
             throw new InvalidAudioException(e);
         }

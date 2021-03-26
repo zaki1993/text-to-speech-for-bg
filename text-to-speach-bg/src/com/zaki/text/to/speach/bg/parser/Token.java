@@ -48,9 +48,6 @@ public class Token {
         if (tokens.containsKey(c)) {
             result = tokens.get(c);
         }
-        if (result == null) {
-            result = tokens.get("NOT_EXISTING");
-        }
 
         return result;
     }

@@ -15,7 +15,7 @@ public class ConsoleReader extends AbstractReader {
     @Override
     public String readString() {
         Scanner sc = new Scanner(getInputStream());
-        return sc.nextLine();
+        return sc.nextLine().trim();
     }
 
     protected void init() {

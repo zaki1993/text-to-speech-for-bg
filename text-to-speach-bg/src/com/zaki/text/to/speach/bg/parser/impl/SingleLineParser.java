@@ -6,6 +6,8 @@ import com.zaki.text.to.speach.bg.parser.Token;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SingleLineParser implements Parser {
@@ -14,11 +16,11 @@ public class SingleLineParser implements Parser {
         if (input.contains("/n")) {
             throw new InvalidInputException(input);
         }
-        List tokens = new ArrayList();
         // For process only single characters
         String[] chars = input.split("");
-        Stream.of(chars).forEach(s -> tokens.add(Token.get(s)));
-
-        return tokens;
+        return Stream.of(chars)
+                     .map(Token::get)
+                     .filter(Objects::nonNull)
+                     .collect(Collectors.toList());
     }
 }

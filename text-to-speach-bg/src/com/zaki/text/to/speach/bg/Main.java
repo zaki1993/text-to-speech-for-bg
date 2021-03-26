@@ -18,8 +18,12 @@ public class Main {
         AudioPlayer player = new AudioPlayer();
 	    do {
 	        String input = reader.readString();
-	        List<Token> tokens = parser.parse(input);
-	        tokens.forEach(player::play);
+	        if (!input.isEmpty()) {
+                List<Token> tokens = parser.parse(input);
+                if (!tokens.isEmpty()) {
+                    tokens.forEach(player::play);
+                }
+            }
         } while (true);
     }
 }
