@@ -1,6 +1,6 @@
 package audio;
 
-import com.zaki.text.to.speach.bg.utils.Utils;
+import com.zaki.text.to.speech.bg.utils.Utils;
 
 /**
  * Class which purpose is only to help loading resources.
