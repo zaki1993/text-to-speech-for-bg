@@ -1,6 +1,6 @@
 package com.zaki.text.to.speech.bg.audio;
 
-import audio.AudioResourceLoader;
+import loader.ResourceLoader;
 import com.zaki.text.to.speech.bg.exception.InvalidAudioException;
 import com.zaki.text.to.speech.bg.parser.Token;
 
@@ -23,7 +23,7 @@ public class AudioPlayer {
         try {
             String url = AUDIO_FOLDER + File.separator + t.getAudioUrl();
             System.out.println("Playing: " + url);
-            InputStream i = AudioResourceLoader.class.getResourceAsStream(url);
+            InputStream i = ResourceLoader.class.getResourceAsStream(url);
             AudioInputStream in = AudioSystem.getAudioInputStream(i);
             Clip clip = AudioSystem.getClip();
             // Listener which allow method return once sound is completed

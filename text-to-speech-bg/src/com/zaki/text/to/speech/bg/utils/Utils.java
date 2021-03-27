@@ -1,5 +1,9 @@
 package com.zaki.text.to.speech.bg.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public final class Utils {
 
     private Utils() {
@@ -8,5 +12,15 @@ public final class Utils {
 
     public static void noop() {
         // nothing to do
+    }
+
+    public static List<String> getFileLines(Class<?> loader, String fileName) {
+        List result = new ArrayList<>();
+        try (Scanner sc = new Scanner(loader.getClassLoader().getResourceAsStream(fileName))) {
+            while (sc.hasNextLine()) {
+                result.add(sc.nextLine().trim());
+            }
+        }
+        return result;
     }
 }

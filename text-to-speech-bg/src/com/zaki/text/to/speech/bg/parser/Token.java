@@ -11,22 +11,20 @@ public class Token {
     private static Map<String, Token> tokens = new HashMap<>();
 
     static {
-        try (Scanner sc = new Scanner(Token.class.getClassLoader().getResourceAsStream("sounds"))) {
-            if (sc != null) {
-                while (sc.hasNextLine()) {
-                    String line = sc.nextLine();
-                    System.out.println("Load: " + line);
-                    String[] parts = line.split("=");
-                    String symbol = parts[0];
-                    String sound = parts[1];
-                    tokens.put(symbol, new Token(symbol, sound));
-                }
-            } else {
-                throw new GeneralException("Could not find sounds mapping file..!");
+        try (Scanner sc = new Scanner(Token.class.getClassLoader().getResourceAsStream("audio/sounds"))) {
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                System.out.println("Load: " + line);
+                String[] parts = line.split("=");
+                String symbol = parts[0];
+                String sound = parts[1];
+                tokens.put(symbol, new Token(symbol, sound));
             }
+        } catch (Exception e) {
+            throw new GeneralException("Could not find sounds mapping file..!");
         }
         if (tokens.isEmpty()) {
-            throw new GeneralException("Could not find sounds mapping file..!");
+            throw new GeneralException("No tokens loaded..!");
         }
     }
 
