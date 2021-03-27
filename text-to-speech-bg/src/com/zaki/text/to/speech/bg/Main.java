@@ -19,7 +19,7 @@ public class Main {
 	    do {
 	        String input = reader.readString();
 	        if (!input.isEmpty()) {
-                List<Token> tokens = parser.parse(input);
+                List<Token> tokens = parser.parse(input.toLowerCase());
                 if (!tokens.isEmpty()) {
                     tokens.forEach(player::play);
                 }
