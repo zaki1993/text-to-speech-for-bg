@@ -1,6 +1,6 @@
 package com.zaki.text.to.speech.bg.audio;
 
-import loader.ResourceLoader;
+import resources.ResourceLoader;
 import com.zaki.text.to.speech.bg.exception.InvalidAudioException;
 import com.zaki.text.to.speech.bg.parser.Token;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class AudioPlayer {
 
-    private final static String AUDIO_FOLDER = "short";
+    private final static String AUDIO_FOLDER = "audio" + File.separator + "short";
     public void play(Token t) {
         CountDownLatch syncLatch = new CountDownLatch(0);
 

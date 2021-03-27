@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 public class MultiLineParser extends SingleLineParser {
     /**
      * Removes all lines and puts .(dot) at the end of each line.
+     *
      * @param input multiline string
      * @return list of tokens to paly
      * @throws InvalidInputException
@@ -18,7 +19,7 @@ public class MultiLineParser extends SingleLineParser {
     public List<Token> parse(String input) throws InvalidInputException {
         return super.parse(
                 Stream.of(input.split("\n"))
-                      .collect(Collectors.joining("."))
+                        .collect(Collectors.joining("."))
         );
     }
 }

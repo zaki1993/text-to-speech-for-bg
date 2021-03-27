@@ -1,7 +1,7 @@
 package com.zaki.text.to.speech.bg.generator;
 
 import com.zaki.text.to.speech.bg.utils.Utils;
-import loader.ResourceLoader;
+import resources.ResourceLoader;
 
 import java.util.List;
 

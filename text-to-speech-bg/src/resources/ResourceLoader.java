@@ -1,4 +1,4 @@
-package loader;
+package resources;
 
 import com.zaki.text.to.speech.bg.utils.Utils;
 

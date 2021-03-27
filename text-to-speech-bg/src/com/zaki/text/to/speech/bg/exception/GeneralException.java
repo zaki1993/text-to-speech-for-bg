@@ -8,4 +8,8 @@ public class GeneralException extends RuntimeException {
     public GeneralException(String msg) {
         super(msg);
     }
+
+    public GeneralException(Throwable t, String msg) {
+        super(msg, t);
+    }
 }
