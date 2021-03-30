@@ -16,12 +16,12 @@ public class AudioPlayer {
 
     private final static String AUDIO_FOLDER = "audio" + File.separator + "short";
     public void play(Token t) {
-        CountDownLatch syncLatch = new CountDownLatch(0);
+        CountDownLatch syncLatch = new CountDownLatch(1);
 
         // For now load the audio every time and just play it
         // TODO: load the audio in the memory and play it, it would be faster
         try {
-            String url = AUDIO_FOLDER + File.separator + t.getAudioUrl();
+            String url = AUDIO_FOLDER + File.separator + t.getOriginalAudio();
             System.out.println("Playing: " + url);
             InputStream i = ResourceLoader.class.getResourceAsStream(url);
             AudioInputStream in = AudioSystem.getAudioInputStream(i);
@@ -36,7 +36,7 @@ public class AudioPlayer {
             clip.start();
 
             syncLatch.await();
-            Thread.sleep(250);
+            //Thread.sleep(250);
         } catch (Exception e) {
             throw new InvalidAudioException(e);
         }
