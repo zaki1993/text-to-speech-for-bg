@@ -141,7 +141,7 @@ public class TokenManager {
             result = tokens.get(symbols);
         }
 
-        return result;
+        return new Token(result);
     }
 
     public static String getSupportedTokensRegex() {

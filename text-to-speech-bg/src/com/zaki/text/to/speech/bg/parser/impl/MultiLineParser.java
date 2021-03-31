@@ -3,7 +3,6 @@ package com.zaki.text.to.speech.bg.parser.impl;
 import com.zaki.text.to.speech.bg.exception.InvalidInputException;
 import com.zaki.text.to.speech.bg.parser.Token;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,7 +15,7 @@ public class MultiLineParser extends SingleLineParser {
      * @throws InvalidInputException
      */
     @Override
-    public List<Token> parse(String input) throws InvalidInputException {
+    public Token parse(String input) throws InvalidInputException {
         return super.parse(
                 Stream.of(input.split("\n"))
                         .collect(Collectors.joining("."))

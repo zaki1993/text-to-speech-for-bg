@@ -2,10 +2,15 @@ package com.zaki.text.to.speech.bg.parser;
 
 import com.zaki.text.to.speech.bg.lang.LetterProperty;
 import com.zaki.text.to.speech.bg.lang.LetterType;
+import sun.applet.AppletResourceLoader;
 
 import java.util.List;
 
 public class Token {
+
+    private Token previous;
+
+    private Token next;
 
     private final String symbols;
 
@@ -26,6 +31,15 @@ public class Token {
         this.loudAudio = loudAudio;
         this.type = type;
         this.properties = properties;
+    }
+
+    public Token(final Token t) {
+        this.symbols = t.symbols;
+        this.originalAudio = t.originalAudio;
+        this.silentAudio = t.silentAudio;
+        this.loudAudio = t.loudAudio;
+        this.type = t.type;
+        this.properties = t.properties;
     }
 
     public String getLoudAudio() {
@@ -50,5 +64,34 @@ public class Token {
 
     public List<LetterProperty> getProperties() {
         return properties;
+    }
+
+    public void setNext(Token next) {
+        this.next = next;
+    }
+
+    public void setPrevious(Token previous) {
+        this.previous = previous;
+    }
+
+    public Token getNext() {
+        return next;
+    }
+
+    public Token getPrevious() {
+        return previous;
+    }
+
+    @Override
+    public String toString() {
+        return symbols;
+    }
+
+    public boolean hasNext() {
+        return next != null;
+    }
+
+    public boolean hasPrevious() {
+        return previous != null;
     }
 }
