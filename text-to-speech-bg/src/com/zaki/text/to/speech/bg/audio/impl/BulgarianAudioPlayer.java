@@ -3,6 +3,7 @@ package com.zaki.text.to.speech.bg.audio.impl;
 import com.zaki.text.to.speech.bg.audio.AudioPlayer;
 import com.zaki.text.to.speech.bg.audio.rules.LanguageRule;
 import com.zaki.text.to.speech.bg.audio.rules.impl.BulgarianLanguageRule;
+import com.zaki.text.to.speech.bg.utils.Utils;
 import resources.ResourceLoader;
 import com.zaki.text.to.speech.bg.exception.InvalidAudioException;
 import com.zaki.text.to.speech.bg.parser.Token;
@@ -46,6 +47,7 @@ public class BulgarianAudioPlayer implements AudioPlayer {
                         syncLatch.countDown();
                     }
                 });
+
                 clip.open(in);
                 clip.start();
 
@@ -53,7 +55,7 @@ public class BulgarianAudioPlayer implements AudioPlayer {
                 //Thread.sleep(250);
             }
         } catch (Exception e) {
-            throw new InvalidAudioException(e);
+            Utils.logSilently(e);
         }
     }
 }

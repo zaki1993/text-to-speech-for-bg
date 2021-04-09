@@ -102,26 +102,31 @@ public class TokenManager {
         LetterType type = null;
         List<LetterProperty> properties = new ArrayList<>();
         for (String property : propertiesPart) {
-            switch (property) {
-                case "vowel":
-                    type = LetterType.VOWEL;
-                    break;
-                case "consonant":
-                    type = LetterType.CONSONANT;
-                    break;
-                case "loud":
-                    if (type != null && type == LetterType.CONSONANT) {
-                        properties.add(LetterProperty.LOUD_CONSONANT);
-                    } else {
-                        throw new GeneralException("loud attribute can be provided only to consonants");
-                    }
-                    break;
-                case "silent":
-                    if (type != null && type == LetterType.CONSONANT) {
-                        properties.add(LetterProperty.SILENT_CONSONANT);
-                    } else {
-                        throw new GeneralException("silent attribute can be provided only to consonants");
-                    }
+            if (!property.isEmpty()) {
+                switch (property.trim()) {
+                    case "vowel":
+                        type = LetterType.VOWEL;
+                        break;
+                    case "consonant":
+                        type = LetterType.CONSONANT;
+                        break;
+                    case "loud":
+                        if (type != null && type == LetterType.CONSONANT) {
+                            properties.add(LetterProperty.LOUD_CONSONANT);
+                        } else {
+                            throw new GeneralException("Property loud can be provided only to consonants");
+                        }
+                        break;
+                    case "silent":
+                        if (type != null && type == LetterType.CONSONANT) {
+                            properties.add(LetterProperty.SILENT_CONSONANT);
+                        } else {
+                            throw new GeneralException("Property silent can be provided only to consonants");
+                        }
+                        break;
+                    default:
+                        throw new GeneralException("Unknown property " + property);
+                }
             }
         }
 
@@ -141,7 +146,7 @@ public class TokenManager {
             result = tokens.get(symbols);
         }
 
-        return new Token(result);
+        return result != null ? new Token(result) : result;
     }
 
     public static String getSupportedTokensRegex() {

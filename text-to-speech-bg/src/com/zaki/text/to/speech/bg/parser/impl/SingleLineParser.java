@@ -13,7 +13,8 @@ import java.util.stream.Stream;
 public class SingleLineParser implements Parser {
     /**
      * Parses only single lines. In case the input is not a single line, an exception is thrown.
-     * Splits the input letter by letter.
+     * Splits the input letter by letter. All unknown or unsupported characters will be ignored
+     * and will not be part of the final result.
      *
      * @param input single line string
      * @return list of tokens to play
@@ -24,8 +25,11 @@ public class SingleLineParser implements Parser {
         if (input.contains("/n")) {
             throw new InvalidInputException(input);
         }
+        String filteredInput = input.replaceAll("[^" + TokenManager.getSupportedTokensRegex() + "]+", "");
+        System.out.println("Filtered input: " + filteredInput);
+
         // For process only single characters
-        List<Token> tokens = Stream.of(input.split(TokenManager.getSupportedTokensRegex()))
+        List<Token> tokens = Stream.of(filteredInput.split(TokenManager.getSupportedTokensRegex()))
                 .map(TokenManager::get)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -33,20 +37,24 @@ public class SingleLineParser implements Parser {
         // Chain all tokens. This will create linked list of tokens.
         // This is required, because there some specific language rules which must be applied,
         // depending on the type of the letter and its position.
-        Token result = tokens.get(0);
-        Token lastProcessed = null;
-        for (int i = 1; i < tokens.size(); i++) {
-            Token current = tokens.get(i);
+        Token result = null;
+        if (tokens.size() > 0) {
+            result = tokens.get(0);
+            Token lastProcessed = null;
+            for (int i = 1; i < tokens.size(); i++) {
+                Token current = tokens.get(i);
+                if (current != null) {
+                    if (lastProcessed != null) {
+                        lastProcessed.setNext(current);
+                        current.setPrevious(lastProcessed);
+                    } else {
+                        result.setNext(current);
+                        current.setPrevious(result);
+                    }
+                }
 
-            if (lastProcessed != null) {
-                lastProcessed.setNext(current);
-                current.setPrevious(lastProcessed);
-            } else {
-                result.setNext(current);
-                current.setPrevious(result);
+                lastProcessed = current;
             }
-
-            lastProcessed = current;
         }
 
         return result;

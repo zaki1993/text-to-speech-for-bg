@@ -23,4 +23,14 @@ public final class Utils {
         }
         return result;
     }
+
+    public static void logSilently(Throwable t) {
+        System.out.println(t.getMessage());
+        t.printStackTrace(System.out);
+    }
+
+    public static void logAndThrow(Throwable t) throws Throwable {
+        logSilently(t);
+        throw t;
+    }
 }
