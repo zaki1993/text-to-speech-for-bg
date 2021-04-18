@@ -20,7 +20,11 @@ public class BulgarianLanguageRule implements LanguageRule {
     public String getAudioUrlForToken(Token t) {
         System.out.println("Applying rule for token=" + t);
         // In case the token has no adjacent tokens, just play its original audio
-        if (t.getNext() == null && t.getPrevious() == null) {
+        if (!t.hasNext() && !t.hasPrevious()) {
+            return t.getOriginalAudio();
+        }
+        // If it has previous, but not next(this is covered by the previous if) and the previous is non letter, then play its original audio.
+        if (t.hasPrevious() && !t.getPrevious().isLetter()) {
             return t.getOriginalAudio();
         }
 

@@ -2,9 +2,9 @@ package com.zaki.text.to.speech.bg.parser;
 
 import com.zaki.text.to.speech.bg.lang.LetterProperty;
 import com.zaki.text.to.speech.bg.lang.LetterType;
-import sun.applet.AppletResourceLoader;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Token {
 
@@ -93,5 +93,22 @@ public class Token {
 
     public boolean hasPrevious() {
         return previous != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Token token = (Token) o;
+        return symbols.equals(token.symbols);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbols);
+    }
+
+    public boolean isLetter() {
+        return type != LetterType.NONE;
     }
 }
